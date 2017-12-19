@@ -1,0 +1,5 @@
+1.下载nodejs并安装
+2. 开发工具virtual studio code/webstorm
+3. npm install -g @angular/cli
+4. ng -v查看angular安装版本
+5. 创建项目 ng new proj_name
