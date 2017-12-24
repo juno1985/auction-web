@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product, ProductService } from '../shared/product.service';
-
+import { FormControl } from '@angular/forms';
+import 'rxjs/Rx';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -10,7 +11,18 @@ export class ProductComponent implements OnInit {
   private products: Product[];
   private imgUrl = 'assets/img/4.jpg';
 
-  constructor(private productService:ProductService) { }
+  private keyword:string;
+
+  //绑定响应式
+  private titleFilter:FormControl=new FormControl();
+
+  constructor(private productService:ProductService) { 
+    this.titleFilter.valueChanges
+    .debounceTime(500)
+    .subscribe(
+      value=>this.keyword=value
+    );
+  }
 
   ngOnInit() {
   
