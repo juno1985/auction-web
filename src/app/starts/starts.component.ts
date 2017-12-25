@@ -13,6 +13,7 @@ export class StartsComponent implements OnInit {
   @Input()
   private rating: number = 0;
 
+  private readonly:boolean=true;
   constructor() { }
 
   ngOnInit() {
@@ -26,11 +27,13 @@ export class StartsComponent implements OnInit {
   }
 
   clickStar(index:number){
-    //点击第一个星星时,下标是0,得到的星星个数是0+1
-    this.rating=index+1;
+    if(!this.readonly){
+      //点击第一个星星时,下标是0,得到的星星个数是0+1
+      this.rating=index+1;
 
-    //重新计算总星星数
-    this.ngOnInit();
+      //重新计算总星星数
+      this.ngOnInit();
+    }
   }
 
 }
