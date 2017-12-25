@@ -17,6 +17,7 @@ export class ProductDetailComponent implements OnInit {
   //保存评价内容
   newComment:string="";
 
+  idCommentHidden=true;
 
   constructor(private routInfo: ActivatedRoute,
               private productService:ProductService) {
