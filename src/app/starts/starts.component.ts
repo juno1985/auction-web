@@ -1,6 +1,7 @@
 //注意Input的导入
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 
 
@@ -9,7 +10,7 @@ import { EventEmitter } from '@angular/core';
   templateUrl: './starts.component.html',
   styleUrls: ['./starts.component.css']
 })
-export class StartsComponent implements OnInit {
+export class StartsComponent implements OnInit,OnChanges {
 
   private stars: boolean[];
   @Input()
@@ -42,11 +43,16 @@ export class StartsComponent implements OnInit {
       //点击第一个星星时,下标是0,得到的星星个数是0+1
       this.rating=index+1;
 
-      //重新计算总星星数
-      this.ngOnInit();
-
       //将评星数发射出去,共父组件得到
       this.ratingChange.emit(this.rating);
+    }
+  }
+
+  ngOnChanges(){
+    this.stars = [];
+    for(let i = 1; i <=5; i++){
+      this.stars.push(i > this.rating);
+
     }
   }
 
