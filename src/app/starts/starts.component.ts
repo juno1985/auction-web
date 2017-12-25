@@ -13,6 +13,7 @@ export class StartsComponent implements OnInit {
   @Input()
   private rating: number = 0;
 
+  @Input()
   private readonly:boolean=true;
   constructor() { }
 
