@@ -37,5 +37,10 @@ export class ProductDetailComponent implements OnInit {
     this.newComment=null;
     this.newRating=5;
     this.idCommentHidden=true;
+
+    //总评论星星重新计算 总星数/评论数
+    //计算总星星数
+    let sum=this.comments.reduce((sum,comment)=>sum+comment.rating,0);
+    this.product.rating=sum/this.comments.length;
   }
 }
