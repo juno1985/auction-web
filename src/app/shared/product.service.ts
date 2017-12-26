@@ -27,6 +27,12 @@ export class ProductService {
  
   constructor() { }
 
+  //返回所有类别
+  getAllCategories():string[]{
+    return ["电子产品","运动健身","生活娱乐",
+      "鞋帽衣服","外设相关","养生保健","电脑器材","书刊报纸","小资扯淡"];
+  }
+
   //得到所有商品
   getProducnts():Product[]{
     return this.products;
