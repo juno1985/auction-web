@@ -14,6 +14,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { HomeComponent } from './home/home.component';
 import { Routes,RouterModule } from '@angular/router';
 import { FilterPipe } from './pipe/filter.pipe';
+import { WebSocketService } from './shared/web-socket.service';
 
 const routeConfig: Routes =[
   {path:'', component:HomeComponent},
@@ -42,7 +43,8 @@ const routeConfig: Routes =[
 
 
   ],
-  providers: [ProductService],
+  //要想能被注入,必须在这里声明
+  providers: [ProductService,WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

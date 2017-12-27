@@ -1,6 +1,8 @@
 import { Product, ProductService, Comment } from './../shared/product.service';
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import { WebSocketService } from '../shared/web-socket.service';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,8 +21,15 @@ export class ProductDetailComponent implements OnInit {
 
   idCommentHidden=true;
 
+  isWatched:boolean=false;
+  currentBid:number;
+
+  subscription:Subscription;
+
+  //在构造器参数里进行注入
   constructor(private routInfo: ActivatedRoute,
-              private productService:ProductService) {
+              private productService:ProductService,
+            private wsService:WebSocketService) {
   
    }
 
@@ -31,7 +40,10 @@ export class ProductDetailComponent implements OnInit {
     //或者使用如下,getProduct返回的是流,那么使用subscribe在其中回调取值
     this.productService.getProduct(productId).subscribe(
       //在回调里赋值
-      product=> this.product=product
+      product=> {
+        this.product=product;
+        this.currentBid=product.price;
+      }
     );
     this.productService.getCommentsForProductId(productId).subscribe(
       comments=> this.comments=comments
@@ -51,4 +63,25 @@ export class ProductDetailComponent implements OnInit {
     let sum=this.comments.reduce((sum,comment)=>sum+comment.rating,0);
     this.product.rating=sum/this.comments.length;
   }
+
+  watchProduct(){
+
+    if(this.subscription){
+    //取消订阅关注
+      this.subscription.unsubscribe();
+      this.isWatched=false;
+      this.subscription=null;
+
+    }
+
+   else{
+
+      this.subscription=this.wsService.createObservableSocket("ws://localhost:8085",this.product.id).subscribe(
+        products=>{
+          let product=products.find(p=>p.productId==this.product.id);
+          this.currentBid=product.bid;
+        }
+      );
+    }
+} 
 }

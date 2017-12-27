@@ -13,6 +13,14 @@
   </div>
 </div>
 
+<div class="thumbnail">
+  <button class="btn btn-default bn-lg" [class.active]="isWatched"
+    (click)="watchProduct()">
+    {{isWatched?'取消关注':'关注'}}
+  </button>
+  <label>最新价格:{{currentBid}}元</label>
+</div>
+
 <div class="well">
 
   <div>
