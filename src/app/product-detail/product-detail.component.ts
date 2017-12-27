@@ -26,8 +26,16 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     let productId:number = this.routInfo.snapshot.params["productId"];
-    this.product=this.productService.getProduct(productId);
-    this.comments=this.productService.getCommentsForProductId(productId);
+    //不使用Observable<Product[]>的话，可以使用下面这种手工订阅方式
+    //所以html绑定Observable流的话就需要使用async管道取值
+    //或者使用如下,getProduct返回的是流,那么使用subscribe在其中回调取值
+    this.productService.getProduct(productId).subscribe(
+      //在回调里赋值
+      product=> this.product=product
+    );
+    this.productService.getCommentsForProductId(productId).subscribe(
+      comments=> this.comments=comments
+    );
   }
 
   addComment(){

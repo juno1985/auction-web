@@ -1,14 +1,6 @@
-<div class="row">
-<div class="col-sm-12">
-  <div class="form-group">
-    <input class="form-control" placeholder="请输入商品名称..."
-       [formControl]="titleFilter">
-  </div>
-</div>
 
-</div>
-<!-- 添加管道,实现对title属性的搜索 filter管道selecter,title商品的字段,keyword来自input绑定 -->
-<div *ngFor="let product of (products|filter:'title':keyword)" class="col-md-4 col-sm-4 col-lg-4">
+<!-- 注意......要使用async管道异步订阅products: Observable流 -->
+<div *ngFor="let product of (products|async)" class="col-md-4 col-sm-4 col-lg-4">
   <div class="thumbnail">
     <img [src]="imgUrl">
     <div class="caption">
