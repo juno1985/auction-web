@@ -22,7 +22,7 @@ export class ProductService {
 
   //函数:返回类型
   getProduct(id:number):Observable<Product>{
-    return this.http.get("/api/products/"+id).map(res=>res.json());
+    return this.http.get("/api/product/"+id).map(res=>res.json());
   }
 
 

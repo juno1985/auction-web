@@ -1,14 +1,14 @@
 <div class="thumbnail">
   <img class="slide-image" src="assets/img/2.jpg">
   <div>
-    <h4 class="pull-right">{{product.price}}元</h4>
-    <h4>{{product.title}}</h4>
-    <h4>{{product.desc}}</h4>
+    <h4 class="pull-right">{{product?.price}}元</h4>
+    <h4>{{product?.title}}</h4>
+    <h4>{{product?.desc}}</h4>
   </div>
   <div>
-    <p class="pull-right">共{{comments.length}}条评论</p>
+    <p class="pull-right">共{{comments?.length}}条评论</p>
     <p>
-      <app-starts [rating]="product.rating"></app-starts>
+      <app-starts [rating]="product?.rating"></app-starts>
     </p>
   </div>
 </div>
