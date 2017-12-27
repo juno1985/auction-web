@@ -31,6 +31,21 @@ export class ProductService {
     return this.http.get("/api/product/"+id+"/comment").map(res=>res.json());
   }
 
+  search(params:ProductSearchParams):Observable<Product[]>{
+    return this.http.get("/api/products"+{search:this.encodeParams}).map(res=>res.json());
+  }
+
+  //判断搜索条件那个有值
+  private encodeParams(params:ProductSearchParams){
+    let result:URLSearchParams;
+    result = Object.keys(params).filter(key=>params[key])
+    .reduce((queryParam:URLSearchParams,key:string)=>{
+      queryParam.append(key, params[key]);
+      return queryParam;
+    },new URLSearchParams());
+
+    return result;
+  }
 }
 
 export class Product{
@@ -53,4 +68,10 @@ export class Comment{
     public rating:number,
     public content:string
   ){}
+}
+//将搜索条件进行封装
+export class ProductSearchParams{
+  constructor(public title:string,
+              public price:number,
+              public category:string){}
 }
