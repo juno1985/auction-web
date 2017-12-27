@@ -52,6 +52,9 @@ export class SearchComponent implements OnInit {
     //表单全部验证过才能提交
     if(this.formModel.valid){
       console.log(this.formModel.value);
+
+      //将表单的值发射出去,供product.component订阅
+      this.prodService.searchEvent.emit(this.formModel.value);
     }
   }
 }

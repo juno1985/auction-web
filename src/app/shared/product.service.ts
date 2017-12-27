@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter } from '@angular/core';
 import {Http} from '@angular/http'
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
+import {URLSearchParams} from '@angular/http';
 @Injectable()
 export class ProductService {
 
-
+  //通过第三方ProductSerivce注册事件流,供product.component订阅
+  searchEvent:EventEmitter<ProductSearchParams>=new EventEmitter();
  
   constructor(private http:Http) { }
 
@@ -32,19 +34,20 @@ export class ProductService {
   }
 
   search(params:ProductSearchParams):Observable<Product[]>{
-    return this.http.get("/api/products"+{search:this.encodeParams}).map(res=>res.json());
+   
+    return this.http.get("/api/products",{search:this.encodeParams(params)})
+    .map(res=>res.json());
   }
 
   //判断搜索条件那个有值
   private encodeParams(params:ProductSearchParams){
-    let result:URLSearchParams;
-    result = Object.keys(params).filter(key=>params[key])
+   
+    return Object.keys(params).filter(key=>params[key])
     .reduce((queryParam:URLSearchParams,key:string)=>{
       queryParam.append(key, params[key]);
+      console.log("-----"+queryParam);
       return queryParam;
     },new URLSearchParams());
-
-    return result;
   }
 }
 

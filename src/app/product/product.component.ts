@@ -19,6 +19,14 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
   
     this.products=this.productService.getProducnts();
+
+    //订阅productService中的事件流
+    this.productService.searchEvent.subscribe(
+      params=>{
+        console.log("product组件得到的值为: "+params.title+" "+params.price+" "+params.category);
+        this.products=this.productService.search(params);
+      }
+    );
   }
 
 }
